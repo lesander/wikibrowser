@@ -1,4 +1,87 @@
-iframe {
-  width: 100%;
-  height: 500px;
+html, body {
+    color: #fff;
+    background-color: rgb(36, 36, 45);
+}
+
+#intro {
+    position: relative;
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+#intro h2 {
+    text-transform: uppercase;
+    font-weight: lighter;
+}
+
+h3 {
+    font-style: italic;
+    font-weight: lighter;
+    font-size: 33px;
+    padding-top: 20px;
+    margin-top: 0;
+}
+
+h1 {
+    font-family: serif;
+    font-size: 50px;
+    margin-bottom: -21px;
+}
+
+button#game-start {
+    margin-top: 40px;
+    border-radius: 3px;
+    width: 155px;
+    background-color: #3498db;
+    border-color: #3498db;
+}
+
+#intro h2:last-of-type {
+    font-size: 45.5px;
+    margin-top: -15px;
+}
+
+div#intro-bg {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 355px;
+    background-image: url("../img/bg.jpg");   background-size: contain;
+    -webkit-filter: blur(.8px);;
+    z-index: 1;
+}
+
+div#intro-contents {
+    z-index: 9001;
+    position: relative;
+}
+
+#stats h2 {
+    text-align: center;
+    font-weight: lighter;
+    font-size: 26px;
+}
+
+section#stats {
+    background-color: rgb(36, 36, 45);
+    padding-top: 1px;
+    z-index: 9002;
+    position: relative;
+}
+
+h4 {
+    font-weight: 200;
+    font-size: 14px;
+    font-style: italic;
+    color: rgb(157, 157, 178);
+    text-align: center;
+    margin: 80px;
+}
+
+small {
+}
+
+div#version {
+    margin-top: 10px;
+    color: rgb(157, 157, 178);
 }

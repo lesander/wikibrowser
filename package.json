@@ -9,7 +9,9 @@
       "start": "nw"
   },
   "dependencies": {
-    "nw": ""
+    "nw": "",
+    "bootstrap": "",
+    "jquery": ""
   },
   "devDependencies": {
     "grunt": "",

@@ -8,8 +8,11 @@
 
 /* Include modules. */
 var gui = require('nw.gui');
+var $ = require('jQuery');
+
+
 NwWin = gui.Window;
-gui.Window.get().showDevTools();
+NwWin.get().showDevTools();
 Game = {};
 
 /* Start game on click.  */
@@ -83,7 +86,7 @@ function GameReady() {
   }
 
   // Get title and page from document.
-  Game.Instance.Data.Title = WikiPage.title;
+  Game.Instance.Data.Title = WikiPage.title.replace(" - Wikipedia, the free encyclopedia", "");
   Game.Instance.Data.Page = WikiPage.window.location.href;
 
   // Check if this should count as a click.
