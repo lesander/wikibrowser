@@ -1,0 +1,28 @@
+{
+  "name": "wikibrowser",
+  "version": "1.0.0",
+  "main": "./app/index.html",
+  "description": "Play and compete with Wikipedia Hitler Game players all over the world.",
+  "repository": "https://github.com/lesander/wikibrowser",
+  "license": "MIT",
+  "scripts": {
+      "start": "nw"
+  },
+  "dependencies": {
+    "nw": ""
+  },
+  "devDependencies": {
+    "grunt": "",
+    "grunt-nw-builder": "",
+    "grunt-shell": ""
+  },
+  "window": {
+    "title": "Wikipedia Random Browser",
+    "toolbar": false,
+    "position": "center",
+    "width": 1000,
+    "height": 600,
+    "min_width": 600,
+    "min_height": 400
+  }
+}
