@@ -9,6 +9,7 @@
       <link rel="stylesheet" href="./css/app.css">
     </head>
     <body>
+      <!--// Intro Section. //-->
       <section id="intro">
         <div id="intro-bg"></div>
         <div id="intro-contents">
@@ -17,21 +18,50 @@
           <h2>Random Game</h2>
           <h2>Browser</h2>
           <button id="game-start" class="btn btn-lg btn-primary">Start</button>
-          <div id="version"><small>Currently v1.0.0</small></div>
+          <div id="game-config"><small>Change Game Settings <span class="glyphicon glyphicon-cog"></span></small></div>
         </div>
       </section>
+
+      <!--// Statistics Section. //-->
       <section id="stats">
         <h2>Your Last Successful Games</h2>
-        <div id="games">
-          <h4>Nothing to see here yet..</h4>
-        </div>
+        <div id="games"></div>
       </section>
+
+      <!--// Config Section. //-->
+      <section id="config" style="display: none;">
+
+      </section>
+
+      <!--// Game Section. //-->
       <section id="game" style="display: none;">
+        <div class="game-data-bg"></div>
         <div class="game-data">
-          <div class="stats">Clicks: <span class="clicks">0</span></div>
-          <div class="info">Current page is <span class="page-title"></span></div>
+          <div class="stats"><span class="clicks">0</span> Clicks</div>
+          <div class="info">Current Page &#8220;<span class="page-title"></span>&#8221;</div>
+          <div class="history">History</div>
+          <div class="record"></div>
         </div>
       </section>
+
+      <!--// Gameover Section. //-->
+      <section id="game-over" style="display: none;">
+        <div class="game-stats">
+          <h1></h1>
+          <p>
+            You completed the challenge with <span class="clicks"></span> clicks.
+            <span class="record-or-not"></span>
+          </p>
+        </div>
+        <div class="game-history">
+
+        </div>
+        <div class="game-share">
+
+        </div>
+      </section>
+
+      <!--// App Scripts. //-->
       <script src="./js/cpfix.js"></script>
       <script src="./js/app.js"></script>
     </body>

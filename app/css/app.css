@@ -41,7 +41,8 @@ button#game-start {
     margin-top: -15px;
 }
 
-div#intro-bg {
+div#intro-bg,
+div.game-data-bg {
     position: absolute;
     left: 0;
     width: 100%;
@@ -49,6 +50,10 @@ div#intro-bg {
     background-image: url("../img/bg.jpg");   background-size: contain;
     -webkit-filter: blur(.8px);;
     z-index: 1;
+}
+
+div.game-data-bg {
+  height: 150px;
 }
 
 div#intro-contents {
@@ -67,6 +72,9 @@ section#stats {
     padding-top: 1px;
     z-index: 9002;
     position: relative;
+    padding-left: 25px;
+    padding-right: 25px;
+    font-weight: lighter;
 }
 
 h4 {
@@ -81,7 +89,40 @@ h4 {
 small {
 }
 
-div#version {
+#game-config {
     margin-top: 10px;
     color: rgb(157, 157, 178);
+    cursor: pointer;
+}
+
+#game-config span {
+    top: 2.4px;
+}
+
+.game-data {
+    z-index: 9002;
+    position: relative;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.game-data .stats {
+    font-size: 60px;
+    text-transform: uppercase;
+    font-weight: lighter;
+    letter-spacing: 3px;
+}
+
+.game-data .stats span.clicks {
+    font-weight: bolder;
+}
+
+.game-data .info,
+.game-data .history {
+    font-weight: 200;
+    font-size: 18px;
+}
+
+th {
+  font-weight: 200;
 }

@@ -10,21 +10,33 @@
 var gui = require('nw.gui');
 var $ = require('jQuery');
 
-
+/* Set nodewebkit window and empty game object. */
 NwWin = gui.Window;
-NwWin.get().showDevTools();
 Game = {};
+
+/* Show debug tools. */
+NwWin.get().showDevTools();
+
+/* Game Settings! */
+Game.Settings = {
+  RandomPage: "https://en.wikipedia.org/wiki/Special:Random"
+};
+
+/* Update stats. */
+GameUpdateStats();
 
 /* Start game on click.  */
 $("#game-start").on("click", GameStart);
 
-/* Detect window close. */
+/* Toggle settings page on click. */
+$("#game-config").on("click", ToggleConfig);
 
-
+/* Start the game! */
 function GameStart() {
 
   // Hide introduction section.
   $("section#intro").hide();
+  $("section#stats").hide();
   $("section#game").show();
 
   // Set game instance object.
@@ -40,8 +52,12 @@ function GameStart() {
     },
     PreviousPage: null,
     TargetPage: null,
+    RandomPage: null,
     History: []
   };
+
+  // Get target and random page from settings.
+  Game.Instance.RandomPage = Game.Settings.RandomPage;
 
   // Ask for target page.
   Game.Instance.TargetPage = prompt("Enter full Wikipedia target URL:");
@@ -53,7 +69,7 @@ function GameStart() {
   }
 
   // Load random page!
-  WikiPage = NwWin.open("https://en.wikipedia.org/wiki/Special:Random", {
+  WikiPage = NwWin.open(Game.Instance.RandomPage, {
     title: "Wikipedia Random Browser Game",
     toolbar: false,
     focus: true
@@ -72,14 +88,20 @@ function GameStart() {
 
 function GameReady() {
 
+  // Disable search input.
+  $(WikiPage.window.document).find("input[type=search]").attr("disabled", "").attr("placeholder", "Searching = cheating");
+
   // First page?
   if (Game.Instance.Clicks === "none") {
     // Set start page.
-    Game.Instance.StartPage = WikiPage.window.location.href;
+    Game.Instance.StartPage.Page = WikiPage.window.location.href;
+    Game.Instance.StartPage.Title = WikiPage.title.replace(" - Wikipedia, the free encyclopedia", "");
     // Set to zero.
     Game.Instance.Clicks = 0;
-    // Set previous page to startpage.
-    Game.Instance.PreviousPage = Game.Instance.StartPage;
+    // Set previous page to StartPage.
+    Game.Instance.PreviousPage = Game.Instance.StartPage.Page;
+    // Set first history item.
+    Game.Instance.History[0] = Game.Instance.StartPage;
   } else {
     // Set previous page data.
     Game.Instance.PreviousPage = Game.Instance.Data.Page;
@@ -92,7 +114,8 @@ function GameReady() {
   // Check if this should count as a click.
   if (Game.Instance.Data.Page.indexOf(Game.Instance.PreviousPage) === -1) {
     Game.Instance.Clicks += 1;
-    Game.Instance.History.push(Game.Instance.Data);
+    var newHistory = { Title: Game.Instance.Data.Title, Page: Game.Instance.Data.Page };
+    Game.Instance.History[0+Game.Instance.Clicks] = newHistory;
   }
 
   // Big brother is watching.
@@ -103,23 +126,61 @@ function GameReady() {
   if (Game.Instance.Data.Page == Game.Instance.TargetPage) {
     alert("You've completed the challenge with "+Game.Instance.Clicks+" clicks!");
     // close wikipage, save game statistics.
-    GameSave(Game.Instance.StartPage, Game.Instance.TargetPage,
+    GameSave(Game.Instance.StartPage.Page, Game.Instance.TargetPage,
              Game.Instance.Clicks, Game.Instance.History);
+    GameUpdateStats();
     return GameStop();
   }
 
 }
 
-function GameSave(startpage, targetpage, clicks, history) {
-  var startpage = startpage.replace("https://en.wikipedia.org/wiki/", "");
-  var targetpage = targetpage.replace("https://en.wikipedia.org/wiki/", "");
-  localStorage.setItem( new Date().getTime()+"-"+startpage+"||"+targetpage,
-                        JSON.stringify({"clicks": clicks, "history": history}));
+function GameSave(StartPage, TargetPage, clicks, history) {
+  var StartPage = StartPage.replace("https://en.wikipedia.org/wiki/", "");
+  var TargetPage = TargetPage.replace("https://en.wikipedia.org/wiki/", "");
+  var GameData = {
+    "clicks": clicks,
+    "StartPage": StartPage,
+    "TargetPage": TargetPage,
+    "history": history
+  };
+  localStorage.setItem("WikiGame||"+new Date().getTime()+"||"+
+  StartPage+"||"+TargetPage, JSON.stringify(GameData));
 }
-
 
 function GameStop() {
   if (typeof(WikiPage) !== "undefined") WikiPage.close();
+  $(".game-data .page-title").text("");
+  $(".game-data .clicks").text("0");
   $("section#intro").show();
+  $("section#stats").show();
   $("section#game").hide();
+}
+
+function ToggleConfig() {
+  $("section#config").toggle();
+}
+
+function GameUpdateStats() {
+
+  if (localStorage.length < 1) {
+    $("#stats #games").html("<h4>Nothing to see here yet..</h4>");
+    return;
+  }
+
+  $("#stats #games").html('<table class="table">\
+    <thead><tr>\
+      <th>Clicks</th>\
+      <th>Start Page</th>\
+      <th>Target Page</th>\
+    </tr></thead>\
+    <tbody></tbody>\
+  </table>');
+
+  for (var i = 0; i < localStorage.length; i++) {
+    var game = JSON.parse ( localStorage.getItem( localStorage.key(i) ) );
+    var history = game.history;
+    var tr = '<tr> <td>'+game.clicks+'</td> <td>'+history[0].Title+'</td>\
+                   <td>'+history[history.length-1].Title+'</td> </tr>';
+    $("#stats #games tbody").append(tr);
+  }
 }
