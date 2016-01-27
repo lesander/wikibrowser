@@ -15,7 +15,7 @@ Game = {};
 /* Start game on click.  */
 $("#game-start").on("click", GameStart);
 
-/* Resize iframe height on window height change. */
+/* Detect window close. */
 
 
 function GameStart() {
@@ -62,6 +62,9 @@ function GameStart() {
   // Gets called on every page change.
   WikiPage.on("loaded", GameReady);
 
+  // Stop if wikipage is closed.
+  WikiPage.on("closed", GameStop);
+
 }
 
 function GameReady() {
@@ -72,6 +75,8 @@ function GameReady() {
     Game.Instance.StartPage = WikiPage.window.location.href;
     // Set to zero.
     Game.Instance.Clicks = 0;
+    // Set previous page to startpage.
+    Game.Instance.PreviousPage = Game.Instance.StartPage;
   } else {
     // Set previous page data.
     Game.Instance.PreviousPage = Game.Instance.Data.Page;
@@ -84,6 +89,7 @@ function GameReady() {
   // Check if this should count as a click.
   if (Game.Instance.Data.Page.indexOf(Game.Instance.PreviousPage) === -1) {
     Game.Instance.Clicks += 1;
+    Game.Instance.History.push(Game.Instance.Data);
   }
 
   // Big brother is watching.
@@ -93,10 +99,19 @@ function GameReady() {
   // Check if we've reached the finish!
   if (Game.Instance.Data.Page == Game.Instance.TargetPage) {
     alert("You've completed the challenge with "+Game.Instance.Clicks+" clicks!");
-    // close wikipage, blablabla.
+    // close wikipage, save game statistics.
+    GameSave(Game.Instance.StartPage, Game.Instance.TargetPage,
+             Game.Instance.Clicks, Game.Instance.History);
     return GameStop();
   }
 
+}
+
+function GameSave(startpage, targetpage, clicks, history) {
+  var startpage = startpage.replace("https://en.wikipedia.org/wiki/", "");
+  var targetpage = targetpage.replace("https://en.wikipedia.org/wiki/", "");
+  localStorage.setItem( new Date().getTime()+"-"+startpage+"||"+targetpage,
+                        JSON.stringify({"clicks": clicks, "history": history}));
 }
 
 

@@ -20,9 +20,9 @@
     "title": "Wikipedia Random Browser",
     "toolbar": false,
     "position": "center",
-    "width": 1000,
+    "width": 700,
     "height": 600,
-    "min_width": 600,
-    "min_height": 400
+    "min_width": 700,
+    "min_height": 600
   }
 }
