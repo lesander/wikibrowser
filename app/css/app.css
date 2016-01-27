@@ -119,10 +119,31 @@ small {
 
 .game-data .info,
 .game-data .history {
-    font-weight: 200;
-    font-size: 18px;
+  font-weight: 100;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
 th {
   font-weight: 200;
+}
+
+span.history-data, span.page-title {
+    text-transform: initial;
+    font-weight: 300;
+    letter-spacing: initial;
+}
+
+
+td:first-of-type {
+    text-align: center;
+}
+
+table.table {
+    font-size: 16px;
+}
+
+td {
+    border-top: none !important;
 }

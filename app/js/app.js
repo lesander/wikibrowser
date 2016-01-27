@@ -121,6 +121,7 @@ function GameReady() {
   // Big brother is watching.
   $(".game-data .page-title").html(Game.Instance.Data.Title );
   $(".game-data .clicks").text(Game.Instance.Clicks);
+  $(".game-data .history-data").append(Game.Instance.Data.Title+ " > ");
 
   // Check if we've reached the finish!
   if (Game.Instance.Data.Page == Game.Instance.TargetPage) {
@@ -150,6 +151,7 @@ function GameSave(StartPage, TargetPage, clicks, history) {
 function GameStop() {
   if (typeof(WikiPage) !== "undefined") WikiPage.close();
   $(".game-data .page-title").text("");
+  $(".game-data .history-data").text("");
   $(".game-data .clicks").text("0");
   $("section#intro").show();
   $("section#stats").show();
