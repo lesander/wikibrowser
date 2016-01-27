@@ -22,7 +22,7 @@ h3 {
     margin-top: 0;
 }
 
-h1 {
+#intro h1 {
     font-family: serif;
     font-size: 50px;
     margin-bottom: -21px;
@@ -146,4 +146,54 @@ table.table {
 
 td {
     border-top: none !important;
+}
+
+section#config {
+    padding: 25px;
+    margin-top: 11px;
+    background-color: #272930;
+}
+
+code {
+  color: #1b1d24;
+  background-color: #fff;
+  padding: 1px 3px;
+  font-size: 80%;
+  border-radius: 3px;
+}
+
+#config .contents {
+    margin-left: 30%;
+    margin-right: 30%;
+}
+
+input[type=url] {
+    width: 115%;
+    font-size: 11px;
+}
+
+input[type=url]:active,
+input[type=url]:focus {
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  border-color: #3498db;
+}
+
+section#game-over {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 600px;
+    z-index: 9003;
+    background-color: black;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 200;
+}
+
+#game-over h1 {
+    text-transform: uppercase;
+    font-weight: lighter;
+    font-size: 38px;
+    letter-spacing: 3px;
 }

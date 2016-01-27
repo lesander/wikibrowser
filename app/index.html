@@ -22,15 +22,28 @@
         </div>
       </section>
 
+      <!--// Config Section. //-->
+      <section id="config" style="display: none;">
+        <div class="contents">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="config-enable-search"> Enable <code>CTRL+F</code> page search.
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="config-enable-custom-startpage"> Use your own start page.
+              <input type="url" name="config-value-custom-startpage" class="form-control input-sm"
+              placeholder="https://en.wikipedia.org/wiki/My_Custom_Wiki">
+            </label>
+          </div>
+        </div>
+      </section>
+
       <!--// Statistics Section. //-->
       <section id="stats">
         <h2>Your Last Successful Games</h2>
         <div id="games"></div>
-      </section>
-
-      <!--// Config Section. //-->
-      <section id="config" style="display: none;">
-
       </section>
 
       <!--// Game Section. //-->
@@ -47,9 +60,10 @@
       <!--// Gameover Section. //-->
       <section id="game-over" style="display: none;">
         <div class="game-stats">
-          <h1></h1>
+          <h1>Game Over</h1>
           <p>
-            You completed the challenge with <span class="clicks"></span> clicks.
+            Well done!
+            You completed the challenge with just <span class="clicks"></span> clicks.
             <span class="record-or-not"></span>
           </p>
         </div>

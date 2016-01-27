@@ -37,6 +37,7 @@ function GameStart() {
   // Hide introduction section.
   $("section#intro").hide();
   $("section#stats").hide();
+  $("section#game-over").hide();
   $("section#game").show();
 
   // Set game instance object.
@@ -125,12 +126,17 @@ function GameReady() {
 
   // Check if we've reached the finish!
   if (Game.Instance.Data.Page == Game.Instance.TargetPage) {
-    alert("You've completed the challenge with "+Game.Instance.Clicks+" clicks!");
-    // close wikipage, save game statistics.
+    // Collect easy-to-read history.
+    var NiceHistory = $(".game-data .history-data").text();
+    // Save this game.
     GameSave(Game.Instance.StartPage.Page, Game.Instance.TargetPage,
              Game.Instance.Clicks, Game.Instance.History);
+    // Update page statistics.
     GameUpdateStats();
-    return GameStop();
+    // Close WikiPage and do not show main sections.
+    GameStop();
+    // Open the Game over section.
+    setTimeout(GameOver(Game.Instance, NiceHistory), 100);
   }
 
 }
@@ -149,17 +155,17 @@ function GameSave(StartPage, TargetPage, clicks, history) {
 }
 
 function GameStop() {
-  if (typeof(WikiPage) !== "undefined") WikiPage.close();
-  $(".game-data .page-title").text("");
-  $(".game-data .history-data").text("");
-  $(".game-data .clicks").text("0");
   $("section#intro").show();
   $("section#stats").show();
   $("section#game").hide();
+  $(".game-data .page-title").text("");
+  $(".game-data .history-data").text("");
+  $(".game-data .clicks").text("0");
+  if (typeof(WikiPage) !== "undefined") WikiPage.close();
 }
 
 function ToggleConfig() {
-  $("section#config").toggle();
+  $("section#config").slideToggle(500);
 }
 
 function GameUpdateStats() {
@@ -185,4 +191,12 @@ function GameUpdateStats() {
                    <td>'+history[history.length-1].Title+'</td> </tr>';
     $("#stats #games tbody").append(tr);
   }
+}
+
+function GameOver(Game, NiceHistory) {
+  $("#game-over .clicks").text(Game.Clicks);
+  $("#game-over .game-history").text(NiceHistory);
+  $("section#game-over").show();
+  $("section#intro").hide();
+  $("section#stats").hide();
 }
