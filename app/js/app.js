@@ -84,7 +84,6 @@ function GameReady() {
   // Check if this should count as a click.
   if (Game.Instance.Data.Page.indexOf(Game.Instance.PreviousPage) === -1) {
     Game.Instance.Clicks += 1;
-    Game.Instance.History[Game.History.length+1] = Game.Instance.PreviousPage; // or current?
   }
 
   // Big brother is watching.
