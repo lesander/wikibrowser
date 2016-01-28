@@ -117,12 +117,12 @@ function GameReady() {
     Game.Instance.Clicks += 1;
     var newHistory = { Title: Game.Instance.Data.Title, Page: Game.Instance.Data.Page };
     Game.Instance.History[0+Game.Instance.Clicks] = newHistory;
+    $(".game-data .history-data").append(Game.Instance.Data.Title+ " > ");
   }
 
   // Big brother is watching.
   $(".game-data .page-title").html(Game.Instance.Data.Title );
   $(".game-data .clicks").text(Game.Instance.Clicks);
-  $(".game-data .history-data").append(Game.Instance.Data.Title+ " > ");
 
   // Check if we've reached the finish!
   if (Game.Instance.Data.Page == Game.Instance.TargetPage) {
