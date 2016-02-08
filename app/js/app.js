@@ -31,12 +31,38 @@ $("#game-start").on("click", GameStart);
 /* Toggle settings page on click. */
 $("#game-config").on("click", ToggleConfig);
 
+/* Hide Game Over on click. */
+$("#game-over button#close").on("click", function() {
+  $("section#intro").show();
+  $("section#stats").show();
+  $("section#game-over").hide();
+  $("section#game").hide();
+  $("body").attr("style", "");
+});
+
+/* Update RandomPage on change. */
+UseCustomRandomPage = false;
+$("input[name=config-enable-custom-startpage]").on("change", function() {
+  if ( $("input[name=config-enable-custom-startpage]").is(":checked") ) {
+    $("input[name=config-value-custom-startpage]").trigger("change");
+    UseCustomRandomPage = true;
+  } else {
+    UseCustomRandomPage = false;
+    Game.Settings.RandomPage = "https://en.wikipedia.org/wiki/Special:Random";
+  }
+});
+
+$("input[name=config-value-custom-startpage]").on("keyup change", function() {
+  if (UseCustomRandomPage) Game.Settings.RandomPage = $(this).val();
+});
+
 /* Start the game! */
 function GameStart() {
 
   // Hide introduction section.
   $("section#intro").hide();
   $("section#stats").hide();
+  $("section#config").hide();
   $("section#game-over").hide();
   $("section#game").show();
 
@@ -61,7 +87,8 @@ function GameStart() {
   Game.Instance.RandomPage = Game.Settings.RandomPage;
 
   // Ask for target page.
-  Game.Instance.TargetPage = prompt("Enter full Wikipedia target URL:");
+  //Game.Instance.TargetPage = prompt("Enter full Wikipedia target URL:");
+  Game.Instance.TargetPage = "https://en.wikipedia.org/wiki/Adolf_Hitler";
   if (Game.Instance.TargetPage == null) {
     return GameStop();
   }
@@ -91,6 +118,7 @@ function GameReady() {
 
   // Disable search input.
   $(WikiPage.window.document).find("input[type=search]").attr("disabled", "").attr("placeholder", "Searching = cheating");
+  //$(WikiPage.window.document).find("h1").append("<script>alert(WikiPage.window.location.href)</script>");
 
   // First page?
   if (Game.Instance.Clicks === "none") {
@@ -103,6 +131,7 @@ function GameReady() {
     Game.Instance.PreviousPage = Game.Instance.StartPage.Page;
     // Set first history item.
     Game.Instance.History[0] = Game.Instance.StartPage;
+    $(".game-data .history-data").append(Game.Instance.StartPage.Title+ " > ");
   } else {
     // Set previous page data.
     Game.Instance.PreviousPage = Game.Instance.Data.Page;
@@ -195,8 +224,9 @@ function GameUpdateStats() {
 
 function GameOver(Game, NiceHistory) {
   $("#game-over .clicks").text(Game.Clicks);
-  $("#game-over .game-history").text(NiceHistory);
+  $("#game-over .game-history").text(NiceHistory.replace(/ > $/, ''));
   $("section#game-over").show();
   $("section#intro").hide();
   $("section#stats").hide();
+  $("body").attr("style", "overflow-y: hidden;");
 }

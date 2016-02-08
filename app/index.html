@@ -25,11 +25,11 @@
       <!--// Config Section. //-->
       <section id="config" style="display: none;">
         <div class="contents">
-          <div class="checkbox">
+          <!--//<div class="checkbox">
             <label>
               <input type="checkbox" name="config-enable-search"> Enable <code>CTRL+F</code> page search.
             </label>
-          </div>
+          </div>//-->
           <div class="checkbox">
             <label>
               <input type="checkbox" name="config-enable-custom-startpage"> Use your own start page.
@@ -59,8 +59,9 @@
 
       <!--// Gameover Section. //-->
       <section id="game-over" style="display: none;">
+        <div class="game-over-bg"></div>
         <div class="game-stats">
-          <h1>Game Over</h1>
+          <h1>Success!</h1>
           <p>
             Well done!
             You completed the challenge with just <span class="clicks"></span> clicks.
@@ -71,7 +72,7 @@
 
         </div>
         <div class="game-share">
-
+          <button role="button" id="close" class="btn btn-lg btn-primary">Play Again</button>
         </div>
       </section>
 

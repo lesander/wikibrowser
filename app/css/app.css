@@ -28,6 +28,7 @@ h3 {
     margin-bottom: -21px;
 }
 
+button#close,
 button#game-start {
     margin-top: 40px;
     border-radius: 3px;
@@ -42,7 +43,8 @@ button#game-start {
 }
 
 div#intro-bg,
-div.game-data-bg {
+div.game-data-bg,
+div.game-over-bg {
     position: absolute;
     left: 0;
     width: 100%;
@@ -196,4 +198,14 @@ section#game-over {
     font-weight: lighter;
     font-size: 38px;
     letter-spacing: 3px;
+}
+
+.game-stats, .game-history, .game-share {
+    z-index: 9004;
+    color: #fff;
+    position: relative;
+}
+
+.game-over-bg {
+    height: 600px !important;
 }
