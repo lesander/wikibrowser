@@ -8,3 +8,13 @@ Play the [Wikipedia Random Game](https://en.wikipedia.org/wiki/Wikipedia:Wiki_Ga
 *This application is a work in progress. For issues or feature requests please head over to the [GitHub issue tracker](https://github.com/lesander/wikibrowser/issues) or [create a pull request](https://github.com/lesander/wikibrowser/compare).*
 
 ![](assets/img/screenshot.png)
+
+---
+
+## Roadmap
+- [x] Port NW.js app to Electron app.
+- [ ] Add timer game mode.
+- [ ] Add target page setting.
+- [ ] Add game mode selection menu.
+- [ ] Improve local leaderboards.
+- [ ] Add installer for Windows releases.
