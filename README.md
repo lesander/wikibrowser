@@ -14,6 +14,7 @@ Play the [Wikipedia Random Game](https://en.wikipedia.org/wiki/Wikipedia:Wiki_Ga
 ## Roadmap
 - [x] Port NW.js app to Electron app.
 - [ ] Add timer game mode.
+- [ ] Remove links to countries and year summaries.
 - [ ] Add target page setting.
 - [ ] Add game mode selection menu.
 - [ ] Improve local leaderboards.
