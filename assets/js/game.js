@@ -183,12 +183,6 @@ function GameReady() {
 
 }
 
-function GameNavigate() {
-  console.log('GameNavigate has been called')
-  console.log(this)
-
-}
-
 /**
  * Save the finsihed game
  * to storage.
@@ -266,6 +260,10 @@ function GameOver(Game, NiceHistory) {
   $("body").attr("style", "overflow-y: hidden")
 }
 
+/**
+ * Strip the wikipedia page of the main menu, footer, search bar and add
+ * our own logo and clicks counter.
+ */
 function wikiStrip() {
   const style  = 'text-align:center;text-transform:uppercase;'
   const execJS = 'l=document.getElementsByClassName("mw-wiki-logo")[0];'+
