@@ -24,8 +24,10 @@ function createWindow () {
     slashes: true
   }))
 
-  // Open the DevTools.
-  win.webContents.openDevTools()
+  // Open the DevTools if a debug parameter was passed along.
+  if (process.argv[2] == '-d') {
+    win.webContents.openDevTools()
+  }
 
   // Emitted when the window is closed.
   win.on('closed', () => {

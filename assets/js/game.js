@@ -6,10 +6,8 @@
  */
 
 /* Include modules. */
-const electron = require('electron')
 const remote = require('electron').remote
 const BrowserWindow = remote.BrowserWindow
-const ipc = electron.ipcMain
 const $ = require('jQuery')
 
 /* Set global empty objects. */
@@ -120,20 +118,12 @@ function GameStart() {
  */
 function GameReady() {
 
-  console.log('gameready is called')
-
   WikiPage.show()
   console.log(WikiPage.webContents)
-  // Disable search input.
-  //$(WikiPage.webContents.document).find("input[type=search]").attr("disabled", "").attr("placeholder", "Searching = cheating")
-  const execJS = 'document.getElementById("searchform").innerHTML = "";'+
-                 'document.getElementById("mw-panel").innerHTML = "";'
-  WikiPage.webContents.executeJavaScript(execJS)
-
-  //$(window.document).find("h1").append("<script>alert(window.location.href)</script>")
 
   // First page?
   if (Game.Instance.Clicks === "none") {
+    wikiStrip()
     // Set start page.
     console.log(WikiPage)
     Game.Instance.StartPage.Page = WikiPage.webContents.getURL()
@@ -156,17 +146,20 @@ function GameReady() {
   Game.Instance.Data.Title = WikiPage.webContents.getTitle().replace(" - Wikipedia", "")
   Game.Instance.Data.Page = WikiPage.webContents.getURL()
 
-  // Check if this should count as a click.
-  console.log(Game.Instance.Data.Page)
-  console.log(Game.Instance.PreviousPage)
+  // Check if this should count as a click. (if we're on a new page)
+  if (Game.Instance.Data.Page.indexOf(Game.Instance.PreviousPage) === -1) { //TODO: better comparison, strip hashes.
 
-  if (Game.Instance.Data.Page.indexOf(Game.Instance.PreviousPage) === -1) { // wiki.org/wiki/Dresden & wiki.org/wiki/Dresden_development -> true !!!
+    // Add click.
     Game.Instance.Clicks += 1
+
+    // Add new history.
     var newHistory = { Title: Game.Instance.Data.Title, Page: Game.Instance.Data.Page }
     Game.Instance.History[0+Game.Instance.Clicks] = newHistory
     $(".game-data .history-data").append(Game.Instance.Data.Title+ " > ")
-  } else {
-    console.log('does not count as a click')
+
+    // Add image and styles to page.
+    wikiStrip()
+
   }
 
   // Big brother is watching.
@@ -271,4 +264,19 @@ function GameOver(Game, NiceHistory) {
   $("section#intro").hide()
   $("section#stats").hide()
   $("body").attr("style", "overflow-y: hidden")
+}
+
+function wikiStrip() {
+  const style  = 'text-align:center;text-transform:uppercase;'
+  const execJS = 'l=document.getElementsByClassName("mw-wiki-logo")[0];'+
+                 'l.setAttribute("style", "background-image:'+
+                 'url(\'https://raw.githubusercontent.com/lesander/wikibrowser/electron/assets/img/logo.png\')");'+
+                 'document.getElementById("mw-head-base").setAttribute("style", "height:38px;");'+
+                 'l.setAttribute("href", "#");' +
+                 'document.getElementById("mw-panel").innerHTML += "<p style=\''+style+'\'>'+Game.Instance.Clicks+' Click(s)</p>";'+
+                 'document.getElementById("footer").innerHTML = "";' +
+                 'document.getElementById("mw-head").innerHTML = "";' +
+                 'p = document.getElementsByClassName("portal");'+
+                 'for (var i = 0; i < p.length; i++) {p[i].setAttribute("style", "display:none;")}'
+  WikiPage.webContents.executeJavaScript(execJS)
 }
