@@ -142,7 +142,6 @@ exports.PageReady = function () {
   // First page?
   if (Game.Instance.Clicks === "none") {
 
-    Game.StripWiki()
     // Set start page.
     console.log(WikiPage)
     Game.Instance.StartPage.Page = WikiPage.webContents.getURL()
@@ -179,10 +178,10 @@ exports.PageReady = function () {
     Game.Instance.History[0+Game.Instance.Clicks] = newHistory
     $(".game-data .history-data").append(Game.Instance.Data.Title+ " > ")
 
-    // Add image and styles to page.
-    Game.StripWiki()
-
   }
+
+  // Add image and styles to page.
+  Game.StripWiki()
 
   // Big brother is watching.
   $(".game-data .page-title").html(Game.Instance.Data.Title )
