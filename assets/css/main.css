@@ -79,6 +79,13 @@ section#stats {
     font-weight: lighter;
 }
 
+section#stats .remove-game {
+  display: none;
+}
+section#stats tr:hover .remove-game {
+  display: block;
+}
+
 h4 {
     font-weight: 200;
     font-size: 14px;

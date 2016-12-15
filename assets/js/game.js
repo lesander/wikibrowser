@@ -58,6 +58,13 @@ exports.RegisterEventListeners = function () {
     if (UseCustomStartPage) Game.Settings.StartPage = $(this).val()
   })
 
+  /* Remove item from history on click. */
+  $(document).on("click", ".remove-game", function () {
+    const gameId = $(this).parent().parent().attr("data-game")
+    localStorage.removeItem(gameId)
+    Game.UpdateStatistics()
+  })
+
 }
 
 
@@ -263,6 +270,7 @@ exports.UpdateStatistics = function () {
       <th>Clicks</th>\
       <th>Start Page</th>\
       <th>Target Page</th>\
+      <th></th>\
     </tr></thead>\
     <tbody></tbody>\
   </table>')
@@ -270,10 +278,18 @@ exports.UpdateStatistics = function () {
   for (var i = 0; i < localStorage.length; i++) {
     var game = JSON.parse ( localStorage.getItem( localStorage.key(i) ) )
     var history = game.history
-    var tr = '<tr> <td>'+game.clicks+'</td> <td>'+history[0].Title+'</td>\
-                   <td>'+history[history.length-1].Title+'</td> </tr>'
+    var tr = '\
+    <tr data-game="'+localStorage.key(i)+'">\
+      <td>'+game.clicks+'</td>\
+      <td>'+history[0].Title+'</td>\
+      <td>'+history[history.length-1].Title+'</td>\
+      <td>\
+        <a class="remove-game" href="#"><i class="glyphicon glyphicon-remove"></i></a>\
+      </td>\
+    </tr>'
     $("#stats #games tbody").append(tr)
   }
+
 }
 
 
