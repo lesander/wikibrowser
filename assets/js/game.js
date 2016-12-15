@@ -268,7 +268,7 @@ function wikiStrip() {
   const style  = 'text-align:center;text-transform:uppercase;'
   const execJS = 'l=document.getElementsByClassName("mw-wiki-logo")[0];'+
                  'l.setAttribute("style", "background-image:'+
-                 'url(\'https://raw.githubusercontent.com/lesander/wikibrowser/electron/assets/img/logo.png\')");'+
+                 'url(\'https://raw.githubusercontent.com/lesander/wikibrowser/master/assets/img/logo.png\')");'+
                  'document.getElementById("mw-head-base").setAttribute("style", "height:38px;");'+
                  'l.setAttribute("href", "#");' +
                  'document.getElementById("mw-panel").innerHTML += "<p style=\''+style+'\'>'+Game.Instance.Clicks+' Click(s)</p>";'+
