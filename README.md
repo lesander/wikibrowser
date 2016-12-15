@@ -17,5 +17,6 @@ Play the [Wikipedia Random Game](https://en.wikipedia.org/wiki/Wikipedia:Wiki_Ga
 - [ ] Remove links to countries and year summaries.
 - [ ] Add target page setting.
 - [ ] Add game mode selection menu.
+- [ ] Add Ctrl+F search method `win.webContents.findInPage(query)`
 - [ ] Improve local leaderboards.
 - [ ] Add installer for Windows releases.
