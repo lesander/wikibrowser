@@ -82,7 +82,7 @@ exports.Start = function () {
 
   // Set game instance object.
   Game.Instance = {
-    Clicks: "none",
+    Clicks: "no",
     Data: {
       Title: null,
       Page: null
@@ -114,7 +114,7 @@ exports.Start = function () {
   WikiPage.loadURL(Game.Instance.StartPage.Page)
 
   // Set statistics.
-  Game.Instance.Clicks = "none"
+  Game.Instance.Clicks = "no"
 
   // Game is ready.
   WikiPage.once("ready-to-show", Game.PageReady)
@@ -140,7 +140,7 @@ exports.PageReady = function () {
   console.log(WikiPage.webContents)
 
   // First page?
-  if (Game.Instance.Clicks === "none") {
+  if (Game.Instance.Clicks === "no") {
 
     // Set start page.
     console.log(WikiPage)
