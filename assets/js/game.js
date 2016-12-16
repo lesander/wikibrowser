@@ -10,7 +10,7 @@
  * Import modules.
  * ================ */
 
-const remote          = require('electron').remote
+const {remote, shell} = require('electron')
 const BrowserWindow   = remote.BrowserWindow
 const $               = require('jQuery')
 
@@ -31,6 +31,10 @@ exports.RegisterEventListeners = function () {
 
   /* Let's set the version of the app while we're at it. */
   $(".credits span").text('v'+Game.version)
+
+  $("a[data-external]").on("click", function () {
+    shell.openExternal($(this).attr("data-external"))
+  })
 
   /* Start game on click.  */
   $("#game-start").on("click", Game.Start)
