@@ -14,6 +14,7 @@
     "electron-packager": "*"
   },
   "scripts": {
-    "start": "electron . -d"
+    "start": "electron . -d",
+    "build": "electron-packager . WikiBrowser --platform=all --out=builds/ --overwrite --icon=assets/img/app-icon.icns"
   }
 }
