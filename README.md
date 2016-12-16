@@ -15,7 +15,7 @@ Play the [Wikipedia Random Game](https://en.wikipedia.org/wiki/Wikipedia:Wiki_Ga
 - [x] Port NW.js app to Electron app.
 - [ ] Add timer game mode.
 - [ ] Remove links to countries and year summaries.
-- [ ] Add target page setting.
+- [x] Add target page setting.
 - [ ] Add game mode selection menu.
 - [ ] Add Ctrl+F search method `win.webContents.findInPage(query)`
 - [ ] Improve local leaderboards.

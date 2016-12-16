@@ -26,15 +26,19 @@
       <!--// Config Section. //-->
       <section id="config" style="display: none;">
         <div class="contents">
-
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" name="config-enable-custom-startpage"> Use your own start page.
-              <input type="url" name="config-value-custom-startpage" class="form-control input-sm"
-              placeholder="https://en.wikipedia.org/wiki/My_Custom_Wiki">
-            </label>
-          </div>
-
+          <label>
+            Start Page
+            <input data-key="StartPage" type="url" name="config-startpage" class="form-control input-sm">
+          </label>
+          <label>
+            Target Page
+            <input data-key="TargetPage" type="url" name="config-targetpage" class="form-control input-sm">
+          </label>
+          <p class="credits">
+            WikiBrowser <span></span><br>
+            Licensed under the MIT License.<br>
+            <a target="_blank" href="https://git.io/wikigame">See the project on GitHub</a>
+          </p>
         </div>
       </section>
 

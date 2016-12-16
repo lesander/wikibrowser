@@ -29,6 +29,9 @@ exports.RegisterEventListeners = function () {
 
   console.log('[*] Registering event listeners.')
 
+  /* Let's set the version of the app while we're at it. */
+  $(".credits span").text('v'+Game.version)
+
   /* Start game on click.  */
   $("#game-start").on("click", Game.Start)
 
@@ -44,20 +47,11 @@ exports.RegisterEventListeners = function () {
     $("body").attr("style", "")
   })
 
-  /* Update StartPage on change. */
-  UseCustomStartPage = false
-  $("input[name=config-enable-custom-startpage]").on("change", function() {
-    if ( $("input[name=config-enable-custom-startpage]").is(":checked") ) {
-      $("input[name=config-value-custom-startpage]").trigger("change")
-      UseCustomStartPage = true
-    } else {
-      UseCustomStartPage = false
-      Game.Settings.StartPage = "https://en.wikipedia.org/wiki/Special:Random"
-    }
-  })
-
-  $("input[name=config-value-custom-startpage]").on("keyup change", function() {
-    if (UseCustomStartPage) Game.Settings.StartPage = $(this).val()
+  /* Update configuration on change. */
+  $('input[name=config-startpage], input[name=config-targetpage]').on('change', function () {
+    const key = $(this).attr('data-key')
+    const value = $(this).val()
+    Game.UpdateConfiguration(key, value)
   })
 
   /* Remove item from history on click. */
@@ -270,11 +264,13 @@ exports.UpdateStatistics = function () {
 
   console.log('[*] Updating statistics table.')
 
+  // Is there anything to see?
   if (localStorage.length < 1) {
     $("#stats #games").html("<h4>Nothing to see here yet..</h4>")
     return
   }
 
+  // Add empty table.
   $("#stats #games").html('<table class="table">\
     <thead><tr>\
       <th>Clicks</th>\
@@ -285,7 +281,9 @@ exports.UpdateStatistics = function () {
     <tbody></tbody>\
   </table>')
 
+  // Loop through all localStorage relevant data.
   for (var i = 0; i < localStorage.length; i++) {
+    if (localStorage.key(i).indexOf('WikiGame') === -1) continue
     var game = JSON.parse ( localStorage.getItem( localStorage.key(i) ) )
     var history = game.history
     var tr = '\
@@ -337,6 +335,34 @@ exports.StripWiki = function () {
                  'document.getElementById("footer").innerHTML = "";' +
                  'document.getElementById("mw-head").innerHTML = "";' +
                  'p = document.getElementsByClassName("portal");'+
-                 'for (var i = 1; i < p.length; i++) {p[i].setAttribute("style", "display:none;")}'
+                 'for (var i = 0; i < p.length; i++) {p[i].setAttribute("style", "display:none;")};'+
+                 'document.getElementById("p-navigation").setAttribute("style", "display:block;")'
   WikiPage.webContents.executeJavaScript(execJS)
+}
+
+/**
+ * Load the saved configuration from storage and display
+ * the values inside the config menu.
+ */
+exports.LoadConfiguration = function () {
+
+  StartPage = localStorage.getItem('WikiBrowser_StartPage') || Game.Settings.Defaults.StartPage
+  TargetPage = localStorage.getItem('WikiBrowser_TargetPage') || Game.Settings.Defaults.TargetPage
+
+  Game.Settings.StartPage = StartPage
+  Game.Settings.TargetPage = TargetPage
+
+  $('input[name=config-startpage]').val(StartPage).attr('placeholder', StartPage)
+  $('input[name=config-targetpage]').val(TargetPage).attr('placeholder', TargetPage)
+
+}
+
+/**
+ * Update the configuration.
+ * @param {string} key
+ * @param {string} value
+ */
+exports.UpdateConfiguration = function (key, value) {
+  Game.Settings[key] = value
+  return localStorage.setItem('WikiBrowser_'+key, value)
 }

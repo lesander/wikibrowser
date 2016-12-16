@@ -144,6 +144,7 @@ section#stats h4 {
 * ============================ */
 
 section#config {
+  font-weight: lighter;
   padding: 25px;
   margin-top: 11px;
   background-color: #272930;
@@ -155,8 +156,10 @@ section#config .contents {
 }
 
 section#config input[type=url] {
-  width: 115%;
-  font-size: 11px;
+  font-weight: normal;
+  padding: 3px 7px;
+  border-radius: 2px;
+  border-color: transparent;
 }
 
 section#config input[type=url]:active,
@@ -164,6 +167,18 @@ section#config input[type=url]:focus {
   box-shadow: none;
   -webkit-box-shadow: none;
   border-color: #3498db;
+}
+
+section#config label {
+  font-weight: inherit;
+  display: block !important;
+}
+
+section#config .credits {
+  font-weight: normal;
+  margin-top: 2.5em;
+  text-align: center;
+  font-size: 80%;
 }
 
 
