@@ -103,11 +103,8 @@ exports.Start = function () {
   Game.Instance.TargetPage = Game.Settings.TargetPage
 
   // Sanity check the pages.
-  if (Game.Instance.TargetPage == null) {
+  if (Game.Instance.TargetPage == null || Game.Instance.TargetPage.indexOf("wikipedia.org/wiki/") === -1) {
     return Game.Stop()
-  }
-  if (Game.Instance.TargetPage.indexOf("wikipedia.org/wiki/") === -1) {
-    return Game.Start()
   }
 
   // Load random page!
