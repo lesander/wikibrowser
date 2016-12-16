@@ -280,14 +280,16 @@ exports.UpdateStatistics = function () {
       <th>Clicks</th>\
       <th>Start Page</th>\
       <th>Target Page</th>\
-      <th></th>\
+      <th><i class="glyphicon glyphicon-list-alt"></i></th>\
     </tr></thead>\
     <tbody></tbody>\
   </table>')
 
   // Loop through all localStorage relevant data.
+  Game.SavedGames = 0
   for (var i = 0; i < localStorage.length; i++) {
     if (localStorage.key(i).indexOf('WikiGame') === -1) continue
+    Game.SavedGames++
     var game = JSON.parse ( localStorage.getItem( localStorage.key(i) ) )
     var history = game.history
     var tr = '\
@@ -300,6 +302,10 @@ exports.UpdateStatistics = function () {
       </td>\
     </tr>'
     $("#stats #games tbody").append(tr)
+  }
+
+  if (Game.SavedGames === 0) {
+    $("#stats #games").html("<h4>Nothing to see here yet..</h4>")    
   }
 
 }

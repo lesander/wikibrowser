@@ -24,6 +24,10 @@ button.btn-wiki {
   border-color: #3498db !important;
 }
 
+a {
+  color: #3498db !important;
+}
+
 .background {
   position: absolute;
   left: 0;
