@@ -302,7 +302,7 @@ exports.UpdateStatistics = function () {
   }
 
   if (Game.SavedGames === 0) {
-    $("#stats #games").html("<h4>Nothing to see here yet..</h4>")    
+    $("#stats #games").html("<h4>Nothing to see here yet..</h4>")
   }
 
 }
