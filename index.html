@@ -9,16 +9,16 @@
       <link rel="stylesheet" href="./assets/css/main.css">
     </head>
     <body>
-      
+
       <!--// Intro Section. //-->
       <section id="intro">
-        <div id="intro-bg"></div>
+        <div class="background"></div>
         <div id="intro-contents">
           <h3>Welcome to the</h3>
           <h1>Wikipedia</h1>
           <h2>Random Game</h2>
           <h2>Browser</h2>
-          <button id="game-start" class="btn btn-lg btn-primary">Start</button>
+          <button id="game-start" class="btn btn-lg btn-primary btn-wiki">Start</button>
           <div id="game-config"><small>Change Game Settings <span class="glyphicon glyphicon-cog"></span></small></div>
         </div>
       </section>
@@ -26,6 +26,7 @@
       <!--// Config Section. //-->
       <section id="config" style="display: none;">
         <div class="contents">
+
           <div class="checkbox">
             <label>
               <input type="checkbox" name="config-enable-custom-startpage"> Use your own start page.
@@ -33,6 +34,7 @@
               placeholder="https://en.wikipedia.org/wiki/My_Custom_Wiki">
             </label>
           </div>
+
         </div>
       </section>
 
@@ -44,7 +46,7 @@
 
       <!--// Game Section. //-->
       <section id="game" style="display: none;">
-        <div class="game-data-bg"></div>
+        <div class="background"></div>
         <div class="game-data">
           <div class="stats"><span class="clicks">0</span> Clicks</div>
           <div class="info">Current Page &#8220;<span class="page-title"></span>&#8221;</div>
@@ -55,7 +57,7 @@
 
       <!--// Gameover Section. //-->
       <section id="game-over" style="display: none;">
-        <div class="game-over-bg"></div>
+        <div class="background"></div>
         <div class="game-stats">
           <h1>Success!</h1>
           <p>
@@ -68,7 +70,7 @@
 
         </div>
         <div class="game-share">
-          <button role="button" id="close" class="btn btn-lg btn-primary">Play Again</button>
+          <button role="button" id="close" class="btn btn-lg btn-primary btn-wiki">Play Again</button>
         </div>
       </section>
 
