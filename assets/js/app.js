@@ -20,7 +20,8 @@ let Game            = require('./assets/js/game')
 
 let WikiPage
 Game.Settings = {}
-Game.Settings.StartPage = "https://en.wikipedia.org/wiki/Special:Random"
+Game.Settings.StartPage  = "https://en.wikipedia.org/wiki/Special:Random"
+Game.Settings.TargetPage = "https://en.wikipedia.org/wiki/Adolf_Hitler"
 
 
 /*

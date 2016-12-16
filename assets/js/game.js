@@ -102,10 +102,9 @@ exports.Start = function () {
 
   // Get target and random page from settings.
   Game.Instance.StartPage.Page = Game.Settings.StartPage
+  Game.Instance.TargetPage = Game.Settings.TargetPage
 
-  // Ask for target page.
-  //Game.Instance.TargetPage = prompt("Enter full Wikipedia target URL:")
-  Game.Instance.TargetPage = "https://en.wikipedia.org/wiki/Adolf_Hitler"
+  // Sanity check the pages.
   if (Game.Instance.TargetPage == null) {
     return Game.Stop()
   }
@@ -122,18 +121,15 @@ exports.Start = function () {
   // Set statistics.
   Game.Instance.Clicks = "no"
 
-  // Game is ready.
+  // Game is ready or we're navigating to a new page.
+  // These events will only both fire at the first page load.
   WikiPage.once("ready-to-show", Game.PageReady)
-
-  // We're navigating to a new page.
   WikiPage.webContents.on("did-finish-load", Game.PageReady)
 
   // Stop if wikipage is closed.
   WikiPage.on("closed", function () {
-    if (typeof WikiPage === "undefined") {
-      $("#game-over button#close").click()
-    }
     console.log('[!] WikiPage was closed.')
+    Game.Stop()
   })
 
 }
@@ -255,8 +251,7 @@ exports.Stop = function () {
   $(".game-data .page-title").text("")
   $(".game-data .history-data").text("")
   $(".game-data .clicks").text("0")
-  console.log(remote)
-  if (typeof(WikiPage) !== "undefined") WikiPage.close()
+  WikiPage.destroy()
 }
 
 
@@ -338,10 +333,10 @@ exports.StripWiki = function () {
                  'url(\'https://raw.githubusercontent.com/lesander/wikibrowser/master/assets/img/logo.png\')");'+
                  'document.getElementById("mw-head-base").setAttribute("style", "height:38px;");'+
                  'l.setAttribute("href", "#");' +
-                 'document.getElementById("mw-panel").innerHTML += "<p style=\''+style+'\'>'+Game.Instance.Clicks+' Click(s)</p>";'+
+                 'document.getElementById("p-navigation").innerHTML = "<p style=\''+style+'\'>'+Game.Instance.Clicks+' Click(s)</p>";'+
                  'document.getElementById("footer").innerHTML = "";' +
                  'document.getElementById("mw-head").innerHTML = "";' +
                  'p = document.getElementsByClassName("portal");'+
-                 'for (var i = 0; i < p.length; i++) {p[i].setAttribute("style", "display:none;")}'
+                 'for (var i = 1; i < p.length; i++) {p[i].setAttribute("style", "display:none;")}'
   WikiPage.webContents.executeJavaScript(execJS)
 }
