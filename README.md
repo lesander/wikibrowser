@@ -20,3 +20,4 @@ Play the [Wikipedia Random Game](https://en.wikipedia.org/wiki/Wikipedia:Wiki_Ga
 - [ ] Add Ctrl+F search method `win.webContents.findInPage(query)`
 - [ ] Improve local leaderboards.
 - [ ] Add installer for Windows releases.
+- [ ] Add auto-update feature.
