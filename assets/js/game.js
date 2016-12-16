@@ -27,6 +27,8 @@ exports = module.exports = {}
  */
 exports.RegisterEventListeners = function () {
 
+  console.log('[*] Registering event listeners.')
+
   /* Start game on click.  */
   $("#game-start").on("click", Game.Start)
 
@@ -73,6 +75,8 @@ exports.RegisterEventListeners = function () {
  */
 exports.Start = function () {
 
+  console.log('[!] Starting a new game instance.')
+
   // Hide introduction section.
   $("section#intro").hide()
   $("section#stats").hide()
@@ -113,6 +117,8 @@ exports.Start = function () {
   WikiPage = new BrowserWindow({show: false, fullscreenable: false})
   WikiPage.loadURL(Game.Instance.StartPage.Page)
 
+  console.log('[*] Loading BrowserWindow with StartPage.')
+
   // Set statistics.
   Game.Instance.Clicks = "no"
 
@@ -127,6 +133,7 @@ exports.Start = function () {
     if (typeof WikiPage === "undefined") {
       $("#game-over button#close").click()
     }
+    console.log('[!] WikiPage was closed.')
   })
 
 }
@@ -137,13 +144,13 @@ exports.Start = function () {
 exports.PageReady = function () {
 
   WikiPage.show()
-  console.log(WikiPage.webContents)
+  console.log('[*] WikiPage PageReady event emitted.', WikiPage.webContents)
 
   // First page?
   if (Game.Instance.Clicks === "no") {
 
     // Set start page.
-    console.log(WikiPage)
+    console.log('[*] First page has been loaded.')
     Game.Instance.StartPage.Page = WikiPage.webContents.getURL()
     Game.Instance.StartPage.Title = WikiPage.webContents.getTitle().replace(" - Wikipedia", "")
     // Set to zero.
@@ -157,9 +164,7 @@ exports.PageReady = function () {
   } else {
 
     // Set previous page data.
-    console.log('setting previous page data')
     Game.Instance.PreviousPage = Game.Instance.Data.Page
-    console.log('previous page is ', Game.Instance.PreviousPage)
 
   }
 
@@ -169,6 +174,8 @@ exports.PageReady = function () {
 
   // Check if this should count as a click. (if we're on a new page)
   if (Game.Instance.Data.Page.indexOf(Game.Instance.PreviousPage) === -1) { //TODO: better comparison, strip hashes.
+
+    console.log('[*] Adding click to total game clicks.')
 
     // Add click.
     Game.Instance.Clicks += 1
@@ -189,6 +196,8 @@ exports.PageReady = function () {
 
   // Check if we've reached the finish!
   if (Game.Instance.Data.Page == Game.Instance.TargetPage) {
+
+    console.log('[*] Finished game.')
 
     // Collect easy-to-read history.
     var NiceHistory = $(".game-data .history-data").text()
@@ -213,6 +222,8 @@ exports.PageReady = function () {
  */
 exports.Save = function (StartPage, TargetPage, clicks, history) {
 
+  console.log('[*] Saving game statistics to localStorage.')
+
   var StartPage = StartPage.replace("https://en.wikipedia.org/wiki/", "")
   var TargetPage = TargetPage.replace("https://en.wikipedia.org/wiki/", "")
 
@@ -235,6 +246,9 @@ exports.Save = function (StartPage, TargetPage, clicks, history) {
  * Hide game elements and return to the main page.
  */
 exports.Stop = function () {
+
+  console.log('[!] Stopping game.')
+
   $("section#intro").show()
   $("section#stats").show()
   $("section#game").hide()
@@ -258,6 +272,8 @@ exports.ToggleConfig = function () {
  * Update  the game statistics.
  */
 exports.UpdateStatistics = function () {
+
+  console.log('[*] Updating statistics table.')
 
   if (localStorage.length < 1) {
     $("#stats #games").html("<h4>Nothing to see here yet..</h4>")
@@ -296,6 +312,9 @@ exports.UpdateStatistics = function () {
  * Display game over message.
  */
 exports.Over = function (Game, NiceHistory) {
+
+  console.log('[*] Displaying game over message.')
+
   $("#game-over .clicks").text(Game.Clicks)
   $("#game-over .game-history").text(NiceHistory.replace(/ > $/, ''))
   $("section#game-over").show()
@@ -310,6 +329,9 @@ exports.Over = function (Game, NiceHistory) {
  * our own logo and clicks counter.
  */
 exports.StripWiki = function () {
+
+  console.log('[*] Injecting JavaScript into WikiPage.')
+
   const style  = 'text-align:center;text-transform:uppercase;'
   const execJS = 'l=document.getElementsByClassName("mw-wiki-logo")[0];'+
                  'l.setAttribute("style", "background-image:'+
