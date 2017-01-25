@@ -38,7 +38,7 @@ exports.Host = () => {
 
     conn.on('data', (data) => {
       if (data.charAt(0) === '#') {
-        eval(data)
+        eval(data.substring(1))
       } else {
         console.log(data)
       }
@@ -53,7 +53,7 @@ exports.Join = (hostId) => {
 
   conn.on('data', (data) => {
     if (data.charAt(0) === '#') {
-      eval(data)
+      eval(data.substring(1))
     } else {
       console.log(data)
     }
