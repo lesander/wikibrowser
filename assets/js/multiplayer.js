@@ -31,8 +31,9 @@ exports.Host = () => {
     conn.on('open', () => {
       console.log('[!] Connection opened.')
       conn.send('Hello from the other side lol.')
-      $('#slut').on('send', (event, message) => {
+      $('#slut').on('send', (event, message, val = false) => {
         conn.send(message)
+        if (val) eval(val)
       })
     })
 
@@ -60,6 +61,6 @@ exports.Join = (hostId) => {
   })
 }
 
-exports.Send = (message) => {
-  $('#slut').trigger('send', message)
+exports.Send = (message, val) => {
+  $('#slut').trigger('send', message, val)
 }
