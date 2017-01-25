@@ -5,9 +5,11 @@
   "repository": "https://github.com/lesander/wikibrowser",
   "license": "MIT",
   "main": "main.js",
+  "apiKey": "7134x1tweq7u8fr",
   "dependencies": {
     "bootstrap": "",
-    "jquery": ""
+    "jquery": "",
+    "peerjs": ""
   },
   "devDependencies": {
     "electron": "*",

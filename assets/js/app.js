@@ -12,7 +12,9 @@
  * ================ */
 
 let Game            = require('./assets/js/game')
+let Multiplayer     = require('./assets/js/multiplayer')
     Game.version    = require(__dirname+'/package.json').version
+const Peer = require('peerjs')
 
 /*
  * Define app globals.

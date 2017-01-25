@@ -25,25 +25,33 @@ exports = module.exports = {}
 /**
  * Register all event listeners of the application.
  */
-exports.RegisterEventListeners = function () {
+exports.RegisterEventListeners = () => {
 
   console.log('[*] Registering event listeners.')
 
   /* Let's set the version of the app while we're at it. */
   $(".credits span").text('v'+Game.version)
 
-  $("a[data-external]").on("click", function () {
+  $("a[data-external]").on("click", () => {
     shell.openExternal($(this).attr("data-external"))
   })
 
   /* Start game on click.  */
   $("#game-start").on("click", Game.Start)
 
+  $("#rtc-host").on("click", () => {
+    Multiplayer.Host()
+  })
+  $("#rtc-join").on("click", () => {
+    Multiplayer.Join( $("#rtc-hostId").val() )
+  })
+
+
   /* Toggle settings page on click. */
   $("#game-config").on("click", Game.ToggleConfig)
 
   /* Hide Game Over on click. */
-  $("#game-over button#close").on("click", function() {
+  $("#game-over button#close").on("click", () => {
     $("section#intro").show()
     $("section#stats").show()
     $("section#game-over").hide()
@@ -52,14 +60,14 @@ exports.RegisterEventListeners = function () {
   })
 
   /* Update configuration on change. */
-  $('input[name=config-startpage], input[name=config-targetpage]').on('change', function () {
+  $('input[name=config-startpage], input[name=config-targetpage]').on('change', () => {
     const key = $(this).attr('data-key')
     const value = $(this).val()
     Game.UpdateConfiguration(key, value)
   })
 
   /* Remove item from history on click. */
-  $(document).on("click", ".remove-game", function () {
+  $(document).on("click", ".remove-game", () => {
     const gameId = $(this).parent().parent().attr("data-game")
     localStorage.removeItem(gameId)
     Game.UpdateStatistics()
@@ -71,7 +79,7 @@ exports.RegisterEventListeners = function () {
 /**
  * Start a new game instance.
  */
-exports.Start = function () {
+exports.Start = () => {
 
   console.log('[!] Starting a new game instance.')
 
@@ -122,7 +130,7 @@ exports.Start = function () {
   WikiPage.webContents.on("did-finish-load", Game.PageReady)
 
   // Stop if wikipage is closed.
-  WikiPage.on("closed", function () {
+  WikiPage.on("closed", () => {
     console.log('[!] WikiPage was closed.')
     Game.Stop()
   })
@@ -132,7 +140,7 @@ exports.Start = function () {
 /**
  * Prepare the game window once it's loaded.
  */
-exports.PageReady = function () {
+exports.PageReady = () => {
 
   WikiPage.show()
   console.log('[*] WikiPage PageReady event emitted.', WikiPage.webContents)
@@ -211,7 +219,7 @@ exports.PageReady = function () {
  * Save the finsihed game
  * to storage.
  */
-exports.Save = function (StartPage, TargetPage, clicks, history) {
+exports.Save = (StartPage, TargetPage, clicks, history) => {
 
   console.log('[*] Saving game statistics to localStorage.')
 
@@ -236,7 +244,7 @@ exports.Save = function (StartPage, TargetPage, clicks, history) {
 /**
  * Hide game elements and return to the main page.
  */
-exports.Stop = function () {
+exports.Stop = () => {
 
   console.log('[!] Stopping game.')
 
@@ -253,7 +261,7 @@ exports.Stop = function () {
 /**
  * Toggle configuration.
  */
-exports.ToggleConfig = function () {
+exports.ToggleConfig = () => {
   $("section#config").slideToggle(500)
 }
 
@@ -261,7 +269,7 @@ exports.ToggleConfig = function () {
 /**
  * Update  the game statistics.
  */
-exports.UpdateStatistics = function () {
+exports.UpdateStatistics = () => {
 
   console.log('[*] Updating statistics table.')
 
@@ -311,7 +319,7 @@ exports.UpdateStatistics = function () {
 /**
  * Display game over message.
  */
-exports.Over = function (Game, NiceHistory) {
+exports.Over = (Game, NiceHistory) => {
 
   console.log('[*] Displaying game over message.')
 
@@ -328,7 +336,7 @@ exports.Over = function (Game, NiceHistory) {
  * Strip the wikipedia page of the main menu, footer, search bar and add
  * our own logo and clicks counter.
  */
-exports.StripWiki = function () {
+exports.StripWiki = () => {
 
   console.log('[*] Injecting JavaScript into WikiPage.')
 
@@ -351,7 +359,7 @@ exports.StripWiki = function () {
  * Load the saved configuration from storage and display
  * the values inside the config menu.
  */
-exports.LoadConfiguration = function () {
+exports.LoadConfiguration = () => {
 
   StartPage = localStorage.getItem('WikiBrowser_StartPage') || Game.Settings.Defaults.StartPage
   TargetPage = localStorage.getItem('WikiBrowser_TargetPage') || Game.Settings.Defaults.TargetPage
@@ -369,7 +377,7 @@ exports.LoadConfiguration = function () {
  * @param {string} key
  * @param {string} value
  */
-exports.UpdateConfiguration = function (key, value) {
+exports.UpdateConfiguration = (key, value) => {
   Game.Settings[key] = value
   return localStorage.setItem('WikiBrowser_'+key, value)
 }

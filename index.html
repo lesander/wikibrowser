@@ -19,6 +19,9 @@
           <h2>Random Game</h2>
           <h2>Browser</h2>
           <button id="game-start" class="btn btn-lg btn-primary btn-wiki">Start</button>
+          <br>
+          <button id="rtc-host" class="btn btn-sm btn-link">Host a Game</button>
+          <button id="rtc-join" class="btn btn-sm btn-link">Join a Game</button>
           <div id="game-config"><small>Change Game Settings <span class="glyphicon glyphicon-cog"></span></small></div>
         </div>
       </section>
@@ -33,6 +36,10 @@
           <label>
             Target Page
             <input data-key="TargetPage" type="url" name="config-targetpage" class="form-control input-sm">
+          </label>
+          <label>
+            Host ID
+            <input id="rtc-hostId" data-key="HostId" type="text" name="hostId" class="form-control input-sm">
           </label>
           <p class="credits">
             WikiBrowser <span></span><br>
@@ -75,6 +82,10 @@
           <button role="button" id="close" class="btn btn-lg btn-primary btn-wiki">Play Again</button>
         </div>
       </section>
+
+      <div class="hidden">
+        <div id="slut"></div>
+      </div>
 
       <!--// App Scripts. //-->
       <script src="./assets/js/app.js"></script>
