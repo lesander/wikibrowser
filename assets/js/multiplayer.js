@@ -31,14 +31,17 @@ exports.Host = () => {
     conn.on('open', () => {
       console.log('[!] Connection opened.')
       conn.send('Hello from the other side lol.')
-      $('#slut').on('send', (event, message, val = false) => {
+      $('#slut').on('send', (event, message) => {
         conn.send(message)
-        if (val) eval(val)
       })
     })
 
-    conn.on('data', function(data) {
-      console.log(data)
+    conn.on('data', (data) => {
+      if (data.charAt(0) === '#') {
+        eval(data)
+      } else {
+        console.log(data)
+      }
     })
   })
 }
@@ -49,7 +52,11 @@ exports.Join = (hostId) => {
   let conn = peer.connect(hostId)
 
   conn.on('data', (data) => {
-    console.log(data)
+    if (data.charAt(0) === '#') {
+      eval(data)
+    } else {
+      console.log(data)
+    }
   })
 
   conn.on('open', () => {
